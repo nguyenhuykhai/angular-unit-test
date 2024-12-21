@@ -10,4 +10,9 @@ export class CalcService {
     this.sharedService.mySharedFunction();
     return a * b;
   }
+
+  add(n1: number, n2: number) {
+    this.sharedService.mySharedFunction();
+    return n1 + n2;
+  }
 }
