@@ -3,10 +3,12 @@ import {
   fakeAsync,
   flush,
   TestBed,
+  tick,
 } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { delay, Observable, of } from 'rxjs';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -68,5 +70,35 @@ describe('AppComponent', () => {
 
     expect(btnElement[0].nativeElement.textContent).toContain('Subscribed');
     expect(btnElement[0].nativeElement.disabled).toBeTrue();
+  }));
+
+  it('should test with Promise and SetTimeout', fakeAsync(() => {
+    let count = 0;
+    setTimeout(() => {
+      count = count + 1;
+    }, 0);
+
+    setTimeout(() => {
+      count = count + 2;
+    }, 2000)
+
+    Promise.resolve().then(() => {
+      count = count + 3;
+    });
+
+    tick(1000);
+    expect(count).toBe(4);
+    tick(2000);
+    expect(count).toBe(6);
+  }));
+
+  it('should test with Observable', fakeAsync(() => {
+    let isSubscribed = false;
+    let myObs = of(isSubscribed).pipe(delay(3000))
+    myObs.subscribe(() => {
+      isSubscribed = true;
+    });
+    tick(3000);
+    expect(isSubscribed).toBeTrue();
   }));
 });
