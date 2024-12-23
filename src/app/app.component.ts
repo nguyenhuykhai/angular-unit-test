@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { GradePipe } from './grade.pipe';
+import { HighlightDirective } from './highlight.directive';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, GradePipe],
+  imports: [RouterOutlet, CommonModule, GradePipe, HighlightDirective],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
